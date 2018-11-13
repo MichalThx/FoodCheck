@@ -54,8 +54,7 @@ public class SecondFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-//        page = getArguments().getInt("someInt", 0);
-//        title = getArguments().getString("someTitle");
+
     }
 
     // Inflate the view for the fragment based on layout XML
