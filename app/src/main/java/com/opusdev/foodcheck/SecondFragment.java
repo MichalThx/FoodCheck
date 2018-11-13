@@ -44,9 +44,7 @@ public class SecondFragment extends Fragment {
     // newInstance constructor for creating fragment with arguments
     public static SecondFragment newInstance(int page, String title) {
         SecondFragment fragmentSecond = new SecondFragment();
-//        Bundle args = new Bundle();
-//        args.putString("someTitle", title);
-//        fragmentSecond.setArguments(args);
+
 
         return fragmentSecond;
     }
