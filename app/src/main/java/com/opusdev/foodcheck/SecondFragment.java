@@ -81,19 +81,21 @@ public class SecondFragment extends Fragment {
             public boolean onQueryTextSubmit(String query) {
                 URL url = null;
                 try {
+                    /* TODO: Move the key to separate folder */
                     url = new URL("https://api.edamam.com/search?q="+query+"&app_id=1242155c&app_key=223b7a8dcccd7c01adc0e89f0e13ad7a");
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 }
-                new BackgroundRecipeCheck((TextView) getActivity().findViewById(R.id.SndFraTV)).execute(url);
+                //new BackgroundRecipeCheck((TextView) getActivity().findViewById(R.id.SndFraTV)).execute(url);
 
                 return false;
             }
 
+            /*Creating visual cue of progress being made*/
             @Override
             public boolean onQueryTextChange(String newText) {
-                TextView tv = (TextView) getActivity().findViewById(R.id.SndFraTV);
-                tv.setText("Looking for "+ newText);
+                //TextView tv = (TextView) getActivity().findViewById(R.id.SndFraTV);
+                //tv.setText("Looking for "+ newText);
                 return false;
             }
         });

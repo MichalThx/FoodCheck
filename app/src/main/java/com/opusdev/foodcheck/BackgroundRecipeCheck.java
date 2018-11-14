@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.TextView;
 
+import org.json.JSONException;
 import org.w3c.dom.Text;
 
 import java.io.BufferedInputStream;
@@ -13,6 +14,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -38,7 +40,18 @@ public class BackgroundRecipeCheck extends AsyncTask<URL, Integer, Boolean> {
     @Override
     protected void onPostExecute(Boolean bool) {
         //sets the text to result taken from website(JSON)
-        tv.setText(result);
+        String labels = "";
+        try {
+            RecipeFancier rp = new RecipeFancier(result);
+            //TODO: Here we should inflate the card view with results
+            //labels = rp.getLabeles();
+//            labels = rp.simpleLabels();
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        tv.setText(labels);
     }
 
     /**

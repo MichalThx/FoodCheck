@@ -7,13 +7,14 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 
 import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity  {
 
-    public static class MyPagerAdapter extends FragmentPagerAdapter {
-        private static int NUM_ITEMS = 3;
+    public static class MyPagerAdapter extends FragmentPagerAdapter implements OnListFragmentInteractionListener  {
+        private static int NUM_ITEMS = 4;
 
         public MyPagerAdapter(FragmentManager fragmentManager) {
             super(fragmentManager);
@@ -35,6 +36,8 @@ public class MainActivity extends AppCompatActivity  {
                     return FirstFragment.newInstance(1, "Page # 2");
                 case 2: // Fragment # 1 - This will show SecondFragment
                     return SecondFragment.newInstance(2, "Page # 3");
+                case 3: // Fragment # 1 - This will show SecondFragment
+                    return RecipeItemFragment.newInstance(1);
                 default:
                     return null;
             }
@@ -57,5 +60,6 @@ public class MainActivity extends AppCompatActivity  {
         adapterViewPager = new MyPagerAdapter(getSupportFragmentManager());
         vpPager.setAdapter(adapterViewPager);
     }
+
 
 }
