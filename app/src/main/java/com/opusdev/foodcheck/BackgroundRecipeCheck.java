@@ -2,6 +2,7 @@ package com.opusdev.foodcheck;
 
 import android.app.Activity;
 import android.os.AsyncTask;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -11,10 +12,12 @@ import org.w3c.dom.Text;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -24,10 +27,12 @@ import java.util.Scanner;
  */
 
 public class BackgroundRecipeCheck extends AsyncTask<URL, Integer, Boolean> {
-    TextView tv;
+    ArrayList<String[]> results;
+    RecipesRecyclerAdapter recipesRecyclerAdapter;
+    private SecondFragment.OnListFragmentInteractionListener mListener;
     String result;
-    public BackgroundRecipeCheck(TextView tv){
-        this.tv = tv;
+    public BackgroundRecipeCheck(RecipesRecyclerAdapter recipesRecyclerAdapter){
+        this.recipesRecyclerAdapter = recipesRecyclerAdapter;
     }
     @Override
     protected Boolean doInBackground(URL... urls) {
@@ -44,14 +49,15 @@ public class BackgroundRecipeCheck extends AsyncTask<URL, Integer, Boolean> {
         try {
             RecipeFancier rp = new RecipeFancier(result);
             //TODO: Here we should inflate the card view with results
-            //labels = rp.getLabeles();
-//            labels = rp.simpleLabels();
+
+            recipesRecyclerAdapter.update(rp.getRecipe());
+
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        tv.setText(labels);
+        //tv.setText(labels);
     }
 
     /**
@@ -62,7 +68,6 @@ public class BackgroundRecipeCheck extends AsyncTask<URL, Integer, Boolean> {
     public String getRecipe(URL url){
         String result = "";
         HttpURLConnection urlConnection = null;
-
 
         try {
             urlConnection = (HttpURLConnection) url.openConnection();

@@ -71,8 +71,8 @@ public class RecipeItemFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            //TODO: first its empty/ it should show past results
-            recyclerView.setAdapter(new RecipesRecyclerAdapter(new ArrayList<String>(Arrays.asList( "test1","test2","test3","test4","test5")), mListener));
+            //TODO: if first is empty/ it should show past results (history stored in txt file)
+            //recyclerView.setAdapter(new RecipesRecyclerAdapter(new ArrayList<String>(Arrays.asList( "test1","test2","test3","test4","test5")), mListener));
         }
         return view;
     }

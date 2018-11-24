@@ -6,6 +6,9 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,6 +27,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
@@ -38,11 +43,13 @@ import java.util.stream.Collectors;
  */
 public class SecondFragment extends Fragment {
     // Store instance variables
-    private String title;
-    private int page;
+    private OnListFragmentInteractionListener mListener;
+    //TODO: is this one needed if the app uses it only once?
+    private RecyclerView recyclerView;
+    private RecipesRecyclerAdapter recipesRecyclerAdapter;
 
     // newInstance constructor for creating fragment with arguments
-    public static SecondFragment newInstance(int page, String title) {
+    public static SecondFragment newInstance() {
         SecondFragment fragmentSecond = new SecondFragment();
 
 
@@ -62,6 +69,22 @@ public class SecondFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_second, container, false);
+        if (view instanceof RecyclerView) {
+            Context context = view.getContext();
+            recyclerView = (RecyclerView) view;
+           // recyclerView = this.getActivity().findViewById(R.layout.fragment_recipeitem_list);
+            recyclerView.setLayoutManager(new LinearLayoutManager(context));
+            recipesRecyclerAdapter = new RecipesRecyclerAdapter(
+                    new ArrayList<String>(Arrays.asList( "Search for an item")),
+                    new ArrayList<String>(Arrays.asList("https://upload.wikimedia.org/wikipedia/commons/6/6d/Good_Food_Display_-_NCI_Visuals_Online.jpg")),
+                    new ArrayList<String>(Arrays.asList( "Use the box at the top")),
+                    new ArrayList<String>(Arrays.asList("https://en.wikipedia.org/wiki/Food")),
+                    this.getContext(),
+                    mListener);
+            //TODO: first its empty/ it should show past results, atm it uses SEARCH FOR ITEMS string
+            recyclerView.setAdapter(recipesRecyclerAdapter);
+            //Log.i("are we here", "BOIZZZZZZZ");
+        }
         return view;
     }
 
@@ -86,12 +109,11 @@ public class SecondFragment extends Fragment {
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 }
-                //new BackgroundRecipeCheck((TextView) getActivity().findViewById(R.id.SndFraTV)).execute(url);
-
+                new BackgroundRecipeCheck(recipesRecyclerAdapter).execute(url);
                 return false;
             }
 
-            /*Creating visual cue of progress being made*/
+            /*TODO: Creating visual cue of progress being made*/
             @Override
             public boolean onQueryTextChange(String newText) {
                 //TextView tv = (TextView) getActivity().findViewById(R.id.SndFraTV);
@@ -99,5 +121,13 @@ public class SecondFragment extends Fragment {
                 return false;
             }
         });
+    }
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+    public interface OnListFragmentInteractionListener {
+        // TODO: Update argument type and name
+        void onListFragmentInteraction(String label);
     }
 }

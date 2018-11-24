@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="300dp">
+    android:layout_height="220dp">
 
     <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
@@ -11,18 +11,22 @@
         android:layout_height="200dp"
 
         android:layout_gravity="top"
-        card_view:cardCornerRadius="6dp">
+        android:layout_weight="200"
+        card_view:cardCornerRadius="40dp"
+        card_view:cardElevation="1dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp">
+            android:layout_height="180dp">
 
             <ImageView
                 android:id="@+id/itemImage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="181dp"
+                android:layout_height="126dp"
                 android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="31dp"
                 card_view:srcCompat="@mipmap/ic_launcher" />
 
             <TextView
@@ -38,8 +42,8 @@
                 android:id="@+id/itemDesc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/itemImage"
                 android:layout_alignStart="@+id/itemLabel"
+                android:layout_alignBottom="@+id/itemImage"
                 android:text="TextView" />
         </RelativeLayout>
     </android.support.v7.widget.CardView>

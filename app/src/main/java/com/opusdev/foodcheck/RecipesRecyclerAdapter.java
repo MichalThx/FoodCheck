@@ -1,14 +1,22 @@
 package com.opusdev.foodcheck;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.opusdev.foodcheck.RecipeItemFragment.OnListFragmentInteractionListener;
+import com.opusdev.foodcheck.SecondFragment.OnListFragmentInteractionListener;
+import com.squareup.picasso.Picasso;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,10 +27,19 @@ import java.util.List;
 public class RecipesRecyclerAdapter extends RecyclerView.Adapter<RecipesRecyclerAdapter.ViewHolder> {
 
     private final List<String> labels;
+    private final List<String> images;
+    private final List<String> desc;
+    private final List<String> addresses;
+    private Context context;
     private final OnListFragmentInteractionListener mListener;
 
-    public RecipesRecyclerAdapter(List<String> labels, OnListFragmentInteractionListener listener) {
+
+    public RecipesRecyclerAdapter(List<String> labels,List<String> images, List<String> desc, List<String> addresses,Context context, OnListFragmentInteractionListener listener) {
         this.labels = labels;
+        this.images = images;
+        this.desc = desc;
+        this.addresses = addresses;
+        this.context = context;
         mListener = listener;
     }
 
@@ -34,21 +51,24 @@ public class RecipesRecyclerAdapter extends RecyclerView.Adapter<RecipesRecycler
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         //holder.mItem = mValues.get(position);
         holder.mIdView.setText(labels.get(position));
-        //holder.mContentView.setText(mValues.get(position).content);
+        Picasso.get().load(images.get(position))
+                .resize(400, 400)
+                .centerCrop().into(holder.mImageView);
+        holder.mContentView.setText(desc.get(position));
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (null != mListener) {
-                    // Notify the active callbacks interface (the activity, if the
-                    // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.label);
-                }
+                    Intent i = new Intent(Intent.ACTION_VIEW);
+                    i.setData(Uri.parse(addresses.get(position)));
+                    context.startActivity(i);
+
             }
         });
+
     }
 
     @Override
@@ -59,14 +79,16 @@ public class RecipesRecyclerAdapter extends RecyclerView.Adapter<RecipesRecycler
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView mIdView;
-       // public final TextView mContentView;
+        public final ImageView mImageView;
+        public final TextView mContentView;
         public String label;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
             mIdView = (TextView) view.findViewById(R.id.itemLabel);
-           // mContentView = (TextView) view.findViewById(R.id.content);
+            mImageView = (ImageView) view.findViewById(R.id.itemImage);
+            mContentView = (TextView) view.findViewById(R.id.itemDesc);
         }
 
 /*        @Override
@@ -74,4 +96,33 @@ public class RecipesRecyclerAdapter extends RecyclerView.Adapter<RecipesRecycler
             //return super.toString() + " '" + mContentView.getText() + "'";
         }*/
     }
+    /*The method update(data). Updates the values in the recycler viewer
+    *
+    * */
+    public void update(List<Recipe> data){
+
+        labels.clear();
+        images.clear();
+        desc.clear();
+        addresses.clear();
+        for(Recipe recipe: data){
+            labels.add(recipe.getName());
+            images.add(recipe.getImage());
+            desc.add(descWrapper(recipe.getHealth()));
+            addresses.add(recipe.getAddress());
+        }
+//        labels.addAll(data);
+        this.notifyDataSetChanged();
+    }
+    /*This method cleans the output of JSON
+    *  Changes ["asd","asdd"] into asd, asdd
+    *  TODO: Make an efficient version of this method.
+    * */
+    public String descWrapper(String s){
+            s = s.replace("[","");
+            s = s.replace("\"","");
+            s = s.replace("]","");
+        return s;
+    }
+
 }

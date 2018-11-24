@@ -14,7 +14,7 @@ import java.io.IOException;
 public class MainActivity extends AppCompatActivity  {
 
     public static class MyPagerAdapter extends FragmentPagerAdapter implements OnListFragmentInteractionListener  {
-        private static int NUM_ITEMS = 4;
+        private static int NUM_ITEMS = 3;
 
         public MyPagerAdapter(FragmentManager fragmentManager) {
             super(fragmentManager);
@@ -35,9 +35,9 @@ public class MainActivity extends AppCompatActivity  {
                 case 1: // Fragment # 0 - This will show FirstFragment different title
                     return FirstFragment.newInstance(1, "Page # 2");
                 case 2: // Fragment # 1 - This will show SecondFragment
-                    return SecondFragment.newInstance(2, "Page # 3");
-                case 3: // Fragment # 1 - This will show SecondFragment
-                    return RecipeItemFragment.newInstance(1);
+                    return SecondFragment.newInstance();
+//                case 3: // Fragment # 1 - This will show SecondFragment
+//                    return RecipeItemFragment.newInstance(1);
                 default:
                     return null;
             }

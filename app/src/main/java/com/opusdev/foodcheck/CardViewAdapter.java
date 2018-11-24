@@ -6,6 +6,7 @@ import java.util.ArrayList;
  * Class combines creates a list view from an array list of items
  * Created by Michal on 14.11.2018.
  */
+//TODO: not used class
 
 public class CardViewAdapter {
 
