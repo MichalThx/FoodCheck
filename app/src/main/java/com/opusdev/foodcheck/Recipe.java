@@ -1,5 +1,13 @@
 package com.opusdev.foodcheck;
 
+/** The "Recipe" class creates a structure for a Recipe object.
+ *  It has following features:
+ * @String name = name of the recipe
+ * @String image = url of the image
+ * @String health = allergy information
+ * @String address = address of website that hosts the recipe
+ *
+* */
 public class Recipe {
     private String name;
     private String image;

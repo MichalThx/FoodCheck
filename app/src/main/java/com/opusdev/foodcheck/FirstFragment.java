@@ -15,11 +15,8 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.Toast;
-
 import android.support.v4.app.Fragment;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -29,26 +26,21 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link FirstFragment} interface
- * to handle interaction events.
- * Use the {@link FirstFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * FirstFragment class is responsible for operating the camera page.
+ * This fragment includes camera preview and a button.
+ * In Future it will have a Machine Learning algorithm implementation link to it.
+ *
+ * Following tutorial from page: https://www.airpair.com/android/android-camera-surface-view-fragment#1-introduction
+ * Author: Rex St. John. Accesed 10 December, 2018
  */
 public class FirstFragment extends Fragment {
+
     // Store instance variables
-    private String title;
-    private int page;
     private int cameraId;
 
     // newInstance constructor for creating fragment with arguments
-    public static FirstFragment newInstance(int page, String title) {
+    public static FirstFragment newInstance() {
         FirstFragment fragmentFirst = new FirstFragment();
-        Bundle args = new Bundle();
-        args.putInt("someInt", page);
-        args.putString("someTitle", title);
-        fragmentFirst.setArguments(args);
         return fragmentFirst;
     }
     // Native camera.

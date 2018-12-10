@@ -6,21 +6,15 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 /**
- * A fragment representing a list of Items.
- * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
- * interface.
+ * This class was based on template provided by Android Studio
+ * File>New>Fragment>Fragment with list
+ *
+ * It is repsonible for creating a list of items(recipes)
  */
 public class RecipeItemFragment extends Fragment {
 
@@ -72,22 +66,11 @@ public class RecipeItemFragment extends Fragment {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
             //TODO: if first is empty/ it should show past results (history stored in txt file)
-            //recyclerView.setAdapter(new RecipesRecyclerAdapter(new ArrayList<String>(Arrays.asList( "test1","test2","test3","test4","test5")), mListener));
         }
         return view;
     }
 
 
-//    @Override
-//    public void onAttach(Context context) {
-//        super.onAttach(context);
-//        if (context instanceof OnListFragmentInteractionListener) {
-//            mListener = (OnListFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnListFragmentInteractionListener");
-//        }
-//    }
 
     @Override
     public void onDetach() {

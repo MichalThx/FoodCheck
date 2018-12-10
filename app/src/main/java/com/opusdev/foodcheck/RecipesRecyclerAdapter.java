@@ -1,28 +1,22 @@
 package com.opusdev.foodcheck;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.opusdev.foodcheck.SecondFragment.OnListFragmentInteractionListener;
 import com.squareup.picasso.Picasso;
-
-
-import java.util.ArrayList;
 import java.util.List;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link } and makes a call to the
- * specified {@link OnListFragmentInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
+ * RecipesRecyclerAdapter is the class responsible for creating a way to show the recipe data in a lsit.
+ * It follows the tutorial from here: https://github.com/java-lang-programming/Android-Material-Design-Demo/blob/master/app/src/main/java/com/java_lang_programming/android_material_design_demo/ui/MyItemRecyclerViewAdapter.java
+ *
  */
 public class RecipesRecyclerAdapter extends RecyclerView.Adapter<RecipesRecyclerAdapter.ViewHolder> {
 
@@ -52,7 +46,6 @@ public class RecipesRecyclerAdapter extends RecyclerView.Adapter<RecipesRecycler
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        //holder.mItem = mValues.get(position);
         holder.mIdView.setText(labels.get(position));
         Picasso.get().load(images.get(position))
                 .resize(400, 400)
@@ -68,7 +61,6 @@ public class RecipesRecyclerAdapter extends RecyclerView.Adapter<RecipesRecycler
 
             }
         });
-
     }
 
     @Override
@@ -90,13 +82,10 @@ public class RecipesRecyclerAdapter extends RecyclerView.Adapter<RecipesRecycler
             mImageView = (ImageView) view.findViewById(R.id.itemImage);
             mContentView = (TextView) view.findViewById(R.id.itemDesc);
         }
-
-/*        @Override
-        public String toString() {
-            //return super.toString() + " '" + mContentView.getText() + "'";
-        }*/
     }
-    /*The method update(data). Updates the values in the recycler viewer
+
+    /**The method updates data.
+    * It upates the values in the recycler viewer
     *
     * */
     public void update(List<Recipe> data){
@@ -111,10 +100,10 @@ public class RecipesRecyclerAdapter extends RecyclerView.Adapter<RecipesRecycler
             desc.add(descWrapper(recipe.getHealth()));
             addresses.add(recipe.getAddress());
         }
-//        labels.addAll(data);
         this.notifyDataSetChanged();
     }
-    /*This method cleans the output of JSON
+
+    /** This method cleans the output of JSON
     *  Changes ["asd","asdd"] into asd, asdd
     *  TODO: Make an efficient version of this method.
     * */

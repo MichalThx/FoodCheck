@@ -10,7 +10,12 @@ import android.os.Bundle;
 import android.util.Log;
 
 import java.io.IOException;
-
+/**
+ * This is main class of the application.
+ * The handling of different fragents happens here.
+ * This piece of code is inspired by https://github.com/codepath/android_guides/wiki/ViewPager-with-FragmentPagerAdapter
+ * Author: Roger Hu; Accessed: 10 Decembert, 2018
+* */
 public class MainActivity extends AppCompatActivity  {
 
     public static class MyPagerAdapter extends FragmentPagerAdapter implements OnListFragmentInteractionListener  {
@@ -30,14 +35,12 @@ public class MainActivity extends AppCompatActivity  {
         @Override
         public Fragment getItem(int position) {
             switch (position) {
-                case 0: // Fragment # 0 - This will show FirstFragment
+                case 0:
                     return BlankFragment.newInstance(0, "Page # 1");
-                case 1: // Fragment # 0 - This will show FirstFragment different title
-                    return FirstFragment.newInstance(1, "Page # 2");
-                case 2: // Fragment # 1 - This will show SecondFragment
+                case 1:
+                    return FirstFragment.newInstance();
+                case 2:
                     return SecondFragment.newInstance();
-//                case 3: // Fragment # 1 - This will show SecondFragment
-//                    return RecipeItemFragment.newInstance(1);
                 default:
                     return null;
             }

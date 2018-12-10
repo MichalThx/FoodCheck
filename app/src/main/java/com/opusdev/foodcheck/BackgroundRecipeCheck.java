@@ -1,69 +1,68 @@
 package com.opusdev.foodcheck;
 
-import android.app.Activity;
 import android.os.AsyncTask;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.widget.TextView;
-
 import org.json.JSONException;
-import org.w3c.dom.Text;
-
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
 /**
  * Created by Michal on 28.10.2018.
- * Method finds recipes online based on the query
- *
+ * This class handels searching for a recipe in an API.
+ * It extends Android's AsynTask to do it in the background.
  */
 
 public class BackgroundRecipeCheck extends AsyncTask<URL, Integer, Boolean> {
-    ArrayList<String[]> results;
+
     RecipesRecyclerAdapter recipesRecyclerAdapter;
+
     private SecondFragment.OnListFragmentInteractionListener mListener;
     String result;
+
+    /**
+     * Constructor of this class
+     */
     public BackgroundRecipeCheck(RecipesRecyclerAdapter recipesRecyclerAdapter){
         this.recipesRecyclerAdapter = recipesRecyclerAdapter;
     }
+
+    /** First part of the AsynTask, searches in the background for a recipe, utilizes vargas arguments.
+    * It calls method Recipe with an Url
+    * Url... == it means, this method can take few urls
+    * Example:
+    * name(url1); name(url1,url2,url3);
+    *
+    */
     @Override
     protected Boolean doInBackground(URL... urls) {
         URL url = urls[0];
         result = getRecipe(url);
-
         return false;
     }
-
+    /**
+     *  This method does all the things after the recipe has been found.
+     *  It catches if the JSON file is corrupted or anything similiar.
+     *  It creates Recipe Fancier object with just received file.
+     */
     @Override
     protected void onPostExecute(Boolean bool) {
-        //sets the text to result taken from website(JSON)
-        String labels = "";
         try {
             RecipeFancier rp = new RecipeFancier(result);
             //TODO: Here we should inflate the card view with results
-
             recipesRecyclerAdapter.update(rp.getRecipe());
-
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-        //tv.setText(labels);
     }
 
     /**
      * Method checks if there is a connection to the server
      * @param url = url of a website with modified query
-     * @return it returns String taken from website
+     * @return it returns String taken from website in JSON format
      */
     public String getRecipe(URL url){
         String result = "";

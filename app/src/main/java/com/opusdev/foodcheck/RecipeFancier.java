@@ -7,8 +7,10 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 /**
- * This Class is responsible for creating a recipe box from JSON file
- * Created by Michal on 13.11.2018.
+ * RecipeFancier - creates a Recipe object from JSON file
+ * @String JSON - JSON file is used on creating an object of the RecipeFancier
+ *
+ * getRecipe() - returns an ArrayList of all the recipe objects in the provided JSON file.
  */
 
 public class RecipeFancier {
@@ -31,21 +33,6 @@ public class RecipeFancier {
         }
         return recipes;
     }
-//    public ArrayList<String> getLabeles() throws JSONException {
-//        ArrayList<String> labels = new ArrayList<>();
-//        JSONArray json = (JSONArray) Json.get("hits");
-//        for(int i = 0; i < json.length(); i++){
-//            labels.add(json.getJSONObject(i).getJSONObject("recipe").getString("label"));
-//        }
-//        return labels;
-//    }
-//    public ArrayList<String> getImages() throws JSONException {
-//        ArrayList<String> images = new ArrayList<>();
-//        JSONArray json = (JSONArray) Json.get("hits");
-//        for(int i = 0; i < json.length(); i++){
-//            images.add(json.getJSONObject(i).getJSONObject("recipe").getString("image"));
-//        }
-//        return images;
-//    }
+
 
 }

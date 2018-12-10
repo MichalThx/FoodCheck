@@ -72,7 +72,6 @@ public class SecondFragment extends Fragment {
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             recyclerView = (RecyclerView) view;
-           // recyclerView = this.getActivity().findViewById(R.layout.fragment_recipeitem_list);
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
             recipesRecyclerAdapter = new RecipesRecyclerAdapter(
                     new ArrayList<String>(Arrays.asList( "Search for an item")),
@@ -83,7 +82,6 @@ public class SecondFragment extends Fragment {
                     mListener);
             //TODO: first its empty/ it should show past results, atm it uses SEARCH FOR ITEMS string
             recyclerView.setAdapter(recipesRecyclerAdapter);
-            //Log.i("are we here", "BOIZZZZZZZ");
         }
         return view;
     }
@@ -116,8 +114,6 @@ public class SecondFragment extends Fragment {
             /*TODO: Creating visual cue of progress being made*/
             @Override
             public boolean onQueryTextChange(String newText) {
-                //TextView tv = (TextView) getActivity().findViewById(R.id.SndFraTV);
-                //tv.setText("Looking for "+ newText);
                 return false;
             }
         });

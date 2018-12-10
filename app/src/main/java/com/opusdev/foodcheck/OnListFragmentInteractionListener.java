@@ -5,5 +5,5 @@ package com.opusdev.foodcheck;
  */
 
 interface OnListFragmentInteractionListener {
-    //ASkdjvasjdgsad
+
 }
