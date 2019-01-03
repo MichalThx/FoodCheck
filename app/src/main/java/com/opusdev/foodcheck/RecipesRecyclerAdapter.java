@@ -14,7 +14,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 /**
- * RecipesRecyclerAdapter is the class responsible for creating a way to show the recipe data in a lsit.
+ * RecipesRecyclerAdapter is the class responsible for creating a way to show the recipe data in a list.
  * It follows the tutorial from here: https://github.com/java-lang-programming/Android-Material-Design-Demo/blob/master/app/src/main/java/com/java_lang_programming/android_material_design_demo/ui/MyItemRecyclerViewAdapter.java
  *
  */
@@ -85,7 +85,7 @@ public class RecipesRecyclerAdapter extends RecyclerView.Adapter<RecipesRecycler
     }
 
     /**The method updates data.
-    * It upates the values in the recycler viewer
+    * It updates the values in the recycler viewer
     *
     * */
     public void update(List<Recipe> data){

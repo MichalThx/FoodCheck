@@ -14,7 +14,7 @@ import android.view.ViewGroup;
  * This class was based on template provided by Android Studio
  * File>New>Fragment>Fragment with list
  *
- * It is repsonible for creating a list of items(recipes)
+ * It is responsible for creating a list of items(recipes)
  */
 public class RecipeItemFragment extends Fragment {
 

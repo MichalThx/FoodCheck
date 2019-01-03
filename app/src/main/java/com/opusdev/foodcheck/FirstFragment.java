@@ -1,6 +1,8 @@
 package com.opusdev.foodcheck;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.os.Environment;
@@ -17,6 +19,9 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 import android.support.v4.app.Fragment;
+
+import org.tensorflow.lite.Interpreter;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -76,7 +81,7 @@ public class FirstFragment extends Fragment {
             return view;
         }
 
-        // Trap the capture button.
+        // Machine Learning Button
         Button captureButton = (Button) view.findViewById(R.id.camera_button);
         captureButton.setOnClickListener(
                 new View.OnClickListener() {
@@ -84,6 +89,13 @@ public class FirstFragment extends Fragment {
                     public void onClick(View v) {
                         // get an image from the camera
                         mCamera.takePicture(null, null, mPicture);
+                        Bitmap bmp = BitmapFactory.decodeFile(getOutputMediaFile().getPath());
+                        try {
+                            Tensorflow tensorflow = new Tensorflow(getContext(), bmp);
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
         );
@@ -445,7 +457,7 @@ public class FirstFragment extends Fragment {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         File mediaFile;
         mediaFile = new File(mediaStorageDir.getPath() + File.separator +
-                "IMG_"+ timeStamp + ".jpg");
+                "IMG_"+ 1 + ".jpg");
 
         Toast toast = Toast.makeText(getActivity(),"Your picture has been saved!",Toast.LENGTH_LONG);
         toast.show();
