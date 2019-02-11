@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+ Copyright 2014 The Android Open Source Project
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+     http://www.apache.org/licenses/LICENSE-2.0
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/camera2_fragment"
+    android:background="@android:color/white">
+
+    <com.opusdev.foodcheck.AutoFitTextureView
+        android:id="@+id/texture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp" />
+
+    <!--<android.support.design.widget.FloatingActionButton-->
+        <!--android:id="@+id/floatingActionButton2"-->
+        <!--android:layout_width="113dp"-->
+        <!--android:layout_height="116dp"-->
+        <!--android:layout_alignStart="@+id/texture"-->
+        <!--android:layout_alignEnd="@+id/texture"-->
+        <!--android:layout_alignBottom="@+id/texture"-->
+        <!--android:layout_marginStart="293dp"-->
+        <!--android:layout_marginEnd="4dp"-->
+        <!--android:layout_marginBottom="0dp"-->
+        <!--android:clickable="true"-->
+        <!--app:backgroundTint="@color/cardview_shadow_start_color"-->
+        <!--app:srcCompat="@mipmap/ic_launcher_round" />-->
+
+</RelativeLayout>

@@ -1,14 +1,21 @@
 package com.opusdev.foodcheck;
 
 import android.app.SearchManager;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,9 +28,14 @@ import android.widget.TextView;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -31,6 +43,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.stream.Collectors;
+
+import javax.security.auth.login.LoginException;
 
 
 /**
@@ -42,17 +56,20 @@ import java.util.stream.Collectors;
  *
  */
 public class SecondFragment extends Fragment {
+    //private static String searchValue;
     // Store instance variables
     private OnListFragmentInteractionListener mListener;
     //TODO: is this one needed if the app uses it only once?
     private RecyclerView recyclerView;
     private RecipesRecyclerAdapter recipesRecyclerAdapter;
+    private ArrayList values;
+
+
 
     // newInstance constructor for creating fragment with arguments
     public static SecondFragment newInstance() {
         SecondFragment fragmentSecond = new SecondFragment();
-
-
+        //searchValue = SearchValue;
         return fragmentSecond;
     }
 
@@ -64,14 +81,15 @@ public class SecondFragment extends Fragment {
 
     }
 
-    // Inflate the view for the fragment based on layout XML
+    // Inflate the view for the fragment based on the XML layout
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
+        values = ((MainActivity) getActivity()).getRecentSearches();
         View view = inflater.inflate(R.layout.fragment_second, container, false);
-        if (view instanceof RecyclerView) {
+        recyclerView = view.findViewById(R.id.rycycleBox);
+//        if (view instanceof RecyclerView) {
             Context context = view.getContext();
-            recyclerView = (RecyclerView) view;
+            // recyclerView = (RecyclerView) view;
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
             recipesRecyclerAdapter = new RecipesRecyclerAdapter(
                     new ArrayList<String>(Arrays.asList( "Search for an item")),
@@ -82,7 +100,107 @@ public class SecondFragment extends Fragment {
                     mListener);
             //TODO: first its empty/ it should show past results, atm it uses SEARCH FOR ITEMS string
             recyclerView.setAdapter(recipesRecyclerAdapter);
+        final ImageButton searchButton = view.findViewById(R.id.searchBoxButton);
+        final RecentAutoCompleteText textView = view.findViewById(R.id.autoCompleteTextView);
+
+        final ArrayAdapter<String> test = new ArrayAdapter<String>(getContext(), android.R.layout.select_dialog_item, values);
+        //textView.setThreshold(0);
+        textView.setAdapter(test);
+        //final EditText searchBoxText = view.findViewById(R.id.);
+        String searchValue = ((MainActivity)getActivity()).getSearchValue();
+        SharedViewModel model = ViewModelProviders.of(getActivity()).get(SharedViewModel.class);
+        //final RecentViewModel history = ViewModelProviders.of(getActivity()).get(RecentViewModel.class);
+        model.getSelected().observe(this, new Observer<String>() {
+                    @Override
+                    public void onChanged(@Nullable String item) {
+                        textView.setText(item);
+                    }
+                }
+        );
+
+        try{
+            FileInputStream fis = new FileInputStream(new File(getContext().getCacheDir(), "recentSearch"));
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            values = (ArrayList) ois.readObject();
+            ois.close();
+            fis.close();
+            Log.i("READING", String.valueOf(values.size()));
+        }catch(Exception e) {
+
         }
+        Log.i("READING", "onCreateView: "+values.size());
+//        searchButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//            }
+//        });
+//        textView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                textView.showDropDown();
+//            }
+//        });
+        textView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if(b) textView.showDropDown();
+            }
+        });
+
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String query = textView.getText().toString();
+                //if(query.)
+                textView.setText("");
+                URL url = null;
+                try {
+                    /* TODO: Move the key to separate folder */
+                    url = new URL("https://api.edamam.com/search?q="+query+"&app_id=1242155c&app_key=223b7a8dcccd7c01adc0e89f0e13ad7a");
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+                //TODO: Move set text to different thread so it is seamless
+                //if(!values.equals(""))values.add(query);
+
+
+                new BackgroundRecipeCheck(recipesRecyclerAdapter).execute(url);
+                textView.setText("");
+
+                if(!values.contains(query) && !query.equals(" "))values.add(query);
+                ((MainActivity)getActivity()).setSearchValue("");
+                if(values.size()>10){
+                    values.remove(0);
+                   // test.remove((String) values.get(0));
+
+                }
+                test.clear();
+                for(int i = 0; i < values.size(); i++){
+                    test.insert((String) values.get(i),i);
+                }
+                ((MainActivity) getActivity()).setRecentSearches(values);
+                test.notifyDataSetChanged();
+                textView.clearFocus();
+                searchButton.requestFocus();
+
+                        try{
+                            //File file =
+                            FileOutputStream fos = new FileOutputStream(new File("recentSearch", getContext().getCacheDir()));
+                            ObjectOutputStream oos = new ObjectOutputStream(fos);
+                            oos.writeObject(values);
+                            oos.close();
+                            fos.close();
+                            Log.i("WRITING", String.valueOf(values.size()));
+                        }catch (Exception e){
+
+                        }
+
+
+            }
+        });
+
+//        }
         return view;
     }
 
@@ -91,7 +209,7 @@ public class SecondFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         // Inflate the options menu from XML
-         inflater = getActivity().getMenuInflater();
+        inflater = getActivity().getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
         // Get the SearchView and set the searchable configuration
         SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);

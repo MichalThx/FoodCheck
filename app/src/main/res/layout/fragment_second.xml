@@ -1,9 +1,11 @@
-<!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
-    <!--xmlns:tools="http://schemas.android.com/tools"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--tools:context="com.opusdev.foodcheck.SecondFragment">-->
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/fragment_second_main"
+    android:background="@android:color/white">
 
     <!--<android.support.v7.widget.CardView-->
         <!--xmlns:card_view="http://schemas.android.com/apk/res-auto"-->
@@ -39,14 +41,62 @@
         <!--</LinearLayout>-->
     <!--</android.support.v7.widget.CardView>-->
 
-    <android.support.v7.widget.RecyclerView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <android.support.v7.widget.CardView
+        android:id="@+id/searchBox"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context="com.opusdev.foodcheck.SecondFragment"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="0dp" />
+        android:layout_height="54dp"
+        android:layout_centerInParent="false"
+        android:layout_centerHorizontal="true">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
+
+            <!--<EditText-->
+            <!--android:id="@+id/searchBoxText"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+
+            <!--android:layout_marginRight="80dp"-->
+            <!--app:layout_constraintStart_toStartOf="parent"-->
+            <!--app:layout_constraintTop_toTopOf="parent"></EditText>-->
+
+            <com.opusdev.foodcheck.RecentAutoCompleteText
+                android:id="@+id/autoCompleteTextView"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="60dp"
+                android:layout_weight="1"
+                android:text="Search Here" />
+
+            <ImageButton
+                android:id="@+id/searchBoxButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="-60dp"
+                android:contentDescription="SearchButton"
+                android:src="@drawable/ic_search_black_24dp"
+                tools:layout_editor_absoluteX="347dp"
+                tools:layout_editor_absoluteY="6dp" />
+
+        </LinearLayout>
+
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rycycleBox"
+        android:layout_width="match_parent"
+        android:layout_height="680dp"
+        android:layout_alignTop="@+id/searchBox"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="51dp"
+        tools:context="com.opusdev.foodcheck.SecondFragment">
+
+    </android.support.v7.widget.RecyclerView>
+
+</RelativeLayout>
