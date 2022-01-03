@@ -1,5 +1,6 @@
-package com.opusdev.foodcheck;
+package com.opusdev.foodcheck.recipe;
 
+import com.opusdev.foodcheck.recipe.Recipe;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

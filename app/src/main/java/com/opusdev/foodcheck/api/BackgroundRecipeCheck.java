@@ -1,26 +1,28 @@
-package com.opusdev.foodcheck;
+package com.opusdev.foodcheck.api;
 
 import android.os.AsyncTask;
+import com.opusdev.foodcheck.fragments.SearchFragment;
+import com.opusdev.foodcheck.recipe.RecipeFancier;
+import com.opusdev.foodcheck.recipe.RecipesRecyclerAdapter;
 import org.json.JSONException;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
  * Created by Michal on 28.10.2018.
- * This class handels searching for a recipe in an API.
- * It extends Android's AsynTask to do it in the background.
+ * This class handles searching for a recipe in an API.
+ * It extends Android's AsyncTask to do it in the background.
  */
 
 public class BackgroundRecipeCheck extends AsyncTask<URL, Integer, Boolean> {
 
     RecipesRecyclerAdapter recipesRecyclerAdapter;
 
-    private SecondFragment.OnListFragmentInteractionListener mListener;
+    private SearchFragment.OnListFragmentInteractionListener mListener;
     String result;
 
     /**
@@ -30,7 +32,7 @@ public class BackgroundRecipeCheck extends AsyncTask<URL, Integer, Boolean> {
         this.recipesRecyclerAdapter = recipesRecyclerAdapter;
     }
 
-    /** First part of the AsynTask, searches in the background for a recipe, utilizes vargas arguments.
+    /** First part of the AsyncTask, searches in the background for a recipe, utilizes vargas arguments.
     * It calls method Recipe with an Url
     * Url... == it means, this method can take few urls
     * Example:
@@ -45,7 +47,7 @@ public class BackgroundRecipeCheck extends AsyncTask<URL, Integer, Boolean> {
     }
     /**
      *  This method does all the things after the recipe has been found.
-     *  It catches if the JSON file is corrupted or anything similiar.
+     *  It catches if the JSON file is corrupted or anything similar.
      *  It creates Recipe Fancier object with just received file.
      */
     @Override

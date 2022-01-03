@@ -1,20 +1,15 @@
-package com.opusdev.foodcheck;
+package com.opusdev.foodcheck.fragments;
 
 import android.app.SearchManager;
-import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProviders;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import android.content.Context;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.SearchView;
 import android.util.Log;
@@ -23,28 +18,19 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
-import android.widget.TextView;
+import com.opusdev.foodcheck.*;
+import com.opusdev.foodcheck.api.BackgroundRecipeCheck;
+import com.opusdev.foodcheck.recipe.RecipesRecyclerAdapter;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Scanner;
-import java.util.stream.Collectors;
-
-import javax.security.auth.login.LoginException;
 
 
 /**
@@ -55,7 +41,7 @@ import javax.security.auth.login.LoginException;
  *
  *
  */
-public class SecondFragment extends Fragment {
+public class SearchFragment extends Fragment {
     //private static String searchValue;
     // Store instance variables
     private OnListFragmentInteractionListener mListener;
@@ -67,8 +53,8 @@ public class SecondFragment extends Fragment {
 
 
     // newInstance constructor for creating fragment with arguments
-    public static SecondFragment newInstance() {
-        SecondFragment fragmentSecond = new SecondFragment();
+    public static SearchFragment newInstance() {
+        SearchFragment fragmentSecond = new SearchFragment();
         //searchValue = SearchValue;
         return fragmentSecond;
     }
@@ -89,7 +75,7 @@ public class SecondFragment extends Fragment {
         recyclerView = view.findViewById(R.id.rycycleBox);
 //        if (view instanceof RecyclerView) {
             Context context = view.getContext();
-            // recyclerView = (RecyclerView) view;
+            // recentSearches = (RecyclerView) view;
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
             recipesRecyclerAdapter = new RecipesRecyclerAdapter(
                     new ArrayList<String>(Arrays.asList( "Search for an item")),
@@ -186,7 +172,8 @@ public class SecondFragment extends Fragment {
 
                         try{
                             //File file =
-                            FileOutputStream fos = new FileOutputStream(new File("recentSearch", getContext().getCacheDir()));
+//                            FileOutputStream fos = new FileOutputStream(new File("recentSearch", getContext().getCacheDir()));
+                            FileOutputStream fos = new FileOutputStream("recentSearch");
                             ObjectOutputStream oos = new ObjectOutputStream(fos);
                             oos.writeObject(values);
                             oos.close();

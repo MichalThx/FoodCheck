@@ -1,15 +1,16 @@
-package com.opusdev.foodcheck;
+package com.opusdev.foodcheck.recipe;
 
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.opusdev.foodcheck.SecondFragment.OnListFragmentInteractionListener;
+import com.opusdev.foodcheck.R;
+import com.opusdev.foodcheck.fragments.SearchFragment.OnListFragmentInteractionListener;
 import com.squareup.picasso.Picasso;
 import java.util.List;
 

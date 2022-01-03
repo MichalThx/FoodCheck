@@ -13,7 +13,7 @@
         android:layout_marginStart="0dp"
         android:layout_marginTop="0dp" />
 
-    <android.support.design.widget.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_take_photo"
         android:layout_width="56dp"
         android:layout_height="56dp"

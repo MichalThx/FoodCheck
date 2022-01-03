@@ -42,7 +42,7 @@
 // * In Future it will have a Machine Learning algorithm implementation link to it.
 // *
 // * Following tutorial from page: https://www.airpair.com/android/android-camera-surface-view-fragment#1-introduction
-// * Author: Rex St. John. Accesed 10 December, 2018
+// * Author: Rex St. John. Accessed 10 December, 2018
 // */
 //public class FirstFragment extends Fragment {
 //

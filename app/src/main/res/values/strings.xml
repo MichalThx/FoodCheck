@@ -1,9 +1,11 @@
 <resources>
     <string name="app_name">FoodCheck</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="app_label">test</string>
     <string name="search_hint">hint</string>
     <string name="search">Search Here</string>
+    <string name="food_check">Food-Check</string>
+    <string name="recent_search_history">Recent Search History</string>
+    <string name="go_to_settings">Settings</string>
+    <string name="right_button">Right Button</string>
+    <string name="left_button">Left Button</string>
 </resources>

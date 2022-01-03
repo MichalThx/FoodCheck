@@ -1,4 +1,4 @@
-package com.opusdev.foodcheck;
+package com.opusdev.foodcheck.recipe;
 
 /** The "Recipe" class creates a structure for a Recipe object.
  *  It has following features:
