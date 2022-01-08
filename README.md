@@ -1,13 +1,24 @@
 # Food-Check
-### Recipe finder Android App with Machine Learning image identification of ingredients based on the InceptionV3
+### Recipe finder Android App with Machine Learning image identification of ingredients based on the InceptionV3 model
 
 ### Screenshots
+#### Landing Page
+![LandingPage](screenshots/screen1.png "Landing Page")
+#### Classification Page
+![LandingPage](screenshots/screen2.png "Landing Page")
+#### Search Page
+![LandingPage](screenshots/screen3.png "Landing Page")
+
 
 ### How does it work?
 
-The app has to main goals: add ingredients to the "I have them in a fridge list" and find recipes that can be used within that list.
+The app follows several interaction paths but the main one is scaning an ingredient adding it to "ingredient list". With that data the application will search the supplied API for recipes matching the ingredients. It was create as a part of university project.
 
-The ingredient listing has a Local DB in the backend combined with InceptionV3 model used for identifying set of predefined ingredients.
+### How to run it?
 
-The recipe base is a mix of local and remote one, firstly it will try to match the most fitting recipe within the already stored recipe. If those actions fail, the app will connect remote API and store the chosen recipe on the phone. 
+1. Clone the repository.
+2. Run Android Studio from that project.
+3. Select Run 'app' in a device with SDK 29
 
+#### Attriburtions: 
+[Tensorflow Examples](https://github.com/tensorflow/examples)
