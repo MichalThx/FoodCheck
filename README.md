@@ -1,9 +1,9 @@
-# FoodCheck
+# Food-Check
+### Recipe finder Android App with Machine Learning image identification of ingredients based on the InceptionV3
 
-## Recipe finder Android App with Machine Learning image identification of ingredients based on the InceptionV3
+### Screenshots
 
-
-### How it works?
+### How does it work?
 
 The app has to main goals: add ingredients to the "I have them in a fridge list" and find recipes that can be used within that list.
 

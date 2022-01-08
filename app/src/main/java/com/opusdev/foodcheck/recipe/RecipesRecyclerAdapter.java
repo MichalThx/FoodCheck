@@ -1,118 +1,96 @@
 package com.opusdev.foodcheck.recipe;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import androidx.recyclerview.widget.RecyclerView;
 import com.opusdev.foodcheck.R;
-import com.opusdev.foodcheck.fragments.SearchFragment.OnListFragmentInteractionListener;
 import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 /**
  * RecipesRecyclerAdapter is the class responsible for creating a way to show the recipe data in a list.
  * It follows the tutorial from here: https://github.com/java-lang-programming/Android-Material-Design-Demo/blob/master/app/src/main/java/com/java_lang_programming/android_material_design_demo/ui/MyItemRecyclerViewAdapter.java
- *
  */
 public class RecipesRecyclerAdapter extends RecyclerView.Adapter<RecipesRecyclerAdapter.ViewHolder> {
-
-    private final List<String> labels;
-    private final List<String> images;
-    private final List<String> desc;
-    private final List<String> addresses;
-    private Context context;
-    private final OnListFragmentInteractionListener mListener;
+	private final Context context;
+	List<Recipe> recipes;
 
 
-    public RecipesRecyclerAdapter(List<String> labels,List<String> images, List<String> desc, List<String> addresses,Context context, OnListFragmentInteractionListener listener) {
-        this.labels = labels;
-        this.images = images;
-        this.desc = desc;
-        this.addresses = addresses;
-        this.context = context;
-        mListener = listener;
-    }
+	public RecipesRecyclerAdapter(List<Recipe> recipes, Context context) {
+		this.recipes = recipes;
+		this.context = context;
+	}
 
-    @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.list_recipes_item, parent, false);
-        return new ViewHolder(view);
-    }
+	@Override
+	public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recipe_item_recycler, parent, false);
+		return new ViewHolder(view);
+	}
 
-    @Override
-    public void onBindViewHolder(final ViewHolder holder, final int position) {
-        holder.mIdView.setText(labels.get(position));
-        Picasso.get().load(images.get(position))
-                .resize(400, 400)
-                .centerCrop().into(holder.mImageView);
-        holder.mContentView.setText(desc.get(position));
+	@Override
+	public void onBindViewHolder(final ViewHolder holder, @SuppressLint("RecyclerView") int position) {
+		holder.mIdView.setText(recipes.get(position).getName());
+		Picasso.get().load(recipes.get(position).getImage()).resize(400, 400).centerCrop().into(holder.mImageView);
+		String description = descWrapper(recipes.get(position).getHealth());
+		if (description.length() > 100) {
+			description = description.substring(0, 100) + "...";
+		}
+		holder.mContentView.setText(description);
+		holder.mView.setOnClickListener(v -> {
+			Intent i = new Intent(Intent.ACTION_VIEW);
+			i.setData(Uri.parse(recipes.get(position).getAddress()));
+			context.startActivity(i);
+		});
+	}
 
-        holder.mView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                    Intent i = new Intent(Intent.ACTION_VIEW);
-                    i.setData(Uri.parse(addresses.get(position)));
-                    context.startActivity(i);
+	@Override
+	public int getItemCount() {
+		return this.recipes.size();
+	}
 
-            }
-        });
-    }
+	/**
+	 * The method updates data.
+	 * It updates the values in the recycler viewer
+	 */
+	@SuppressLint("NotifyDataSetChanged")
+	public void update(List<Recipe> data) {
+		this.recipes.clear();
+		this.recipes.addAll(data);
+		this.notifyDataSetChanged();
+	}
 
-    @Override
-    public int getItemCount() {
-        return labels.size();
-    }
+	/**
+	 * This method cleans the output of JSON
+	 * Changes ["abc","def"] into "abc, def"
+	 */
+	public String descWrapper(String s) {
+		s = s.replace("[", "");
+		s = s.replace("\"", "");
+		s = s.replace("]", "");
+		return s;
+	}
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        public final View mView;
-        public final TextView mIdView;
-        public final ImageView mImageView;
-        public final TextView mContentView;
-        public String label;
+	public static class ViewHolder extends RecyclerView.ViewHolder {
+		public final View mView;
+		public final TextView mIdView;
+		public final ImageView mImageView;
+		public final TextView mContentView;
 
-        public ViewHolder(View view) {
-            super(view);
-            mView = view;
-            mIdView = (TextView) view.findViewById(R.id.itemLabel);
-            mImageView = (ImageView) view.findViewById(R.id.itemImage);
-            mContentView = (TextView) view.findViewById(R.id.itemDesc);
-        }
-    }
-
-    /**The method updates data.
-    * It updates the values in the recycler viewer
-    *
-    * */
-    public void update(List<Recipe> data){
-
-        labels.clear();
-        images.clear();
-        desc.clear();
-        addresses.clear();
-        for(Recipe recipe: data){
-            labels.add(recipe.getName());
-            images.add(recipe.getImage());
-            desc.add(descWrapper(recipe.getHealth()));
-            addresses.add(recipe.getAddress());
-        }
-        this.notifyDataSetChanged();
-    }
-
-    /** This method cleans the output of JSON
-    *  Changes ["asd","asdd"] into asd, asdd
-    *  TODO: Make an efficient version of this method.
-    * */
-    public String descWrapper(String s){
-            s = s.replace("[","");
-            s = s.replace("\"","");
-            s = s.replace("]","");
-        return s;
-    }
+		public ViewHolder(View view) {
+			super(view);
+			mView = view;
+			mIdView = view.findViewById(R.id.itemLabel);
+			mImageView = view.findViewById(R.id.itemImage);
+			mContentView = view.findViewById(R.id.itemDesc);
+		}
+	}
 
 }

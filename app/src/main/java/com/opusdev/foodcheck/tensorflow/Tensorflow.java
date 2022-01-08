@@ -1,12 +1,9 @@
 package com.opusdev.foodcheck.tensorflow;
 
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.Bitmap;
-import android.hardware.camera2.CameraDevice;
 import android.util.Log;
 import android.view.TextureView;
-import android.widget.Toast;
 import org.tensorflow.lite.DataType;
 import org.tensorflow.lite.Interpreter;
 import org.tensorflow.lite.support.common.FileUtil;
@@ -55,11 +52,11 @@ public class Tensorflow {
 	private final int TENSOR_SIZE_Y = 299;
 	private final Interpreter interpreter;
 	private final List<String> labels;
-	private TensorImage inputImageBuffer;
 	private final TensorBuffer outputProbabilityBuffer;
 	private final TensorProcessor probabilityProcessor;
 	private final int imageSizeY;
 	private final int imageSizeX;
+	private TensorImage inputImageBuffer;
 
 	public Tensorflow(Activity activity) throws IOException {
 		MappedByteBuffer tfliteModel = FileUtil.loadMappedFile(activity, MODEL_PATH);
@@ -103,8 +100,7 @@ public class Tensorflow {
 	/**
 	 * Classifies a frame from the preview stream.
 	 */
-	public List<Results> classifyFrame(TextureView textureView, Context context,
-								  int sensorOrientation) {
+	public List<Results> classifyFrame(TextureView textureView, int sensorOrientation) {
 		Log.d(TAG, "Started classify");
 		Bitmap bitmap = textureView.getBitmap(TENSOR_SIZE_X, TENSOR_SIZE_Y);
 		inputImageBuffer = loadImage(bitmap, sensorOrientation);
@@ -145,6 +141,14 @@ public class Tensorflow {
 		public Results(String label, float value) {
 			this.label = label;
 			this.value = value;
+		}
+
+		public String getLabel() {
+			return label;
+		}
+
+		public float getValue() {
+			return value;
 		}
 	}
 }
